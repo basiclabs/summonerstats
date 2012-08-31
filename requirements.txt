@@ -1,0 +1,4 @@
+# summonerstats dependencies
+
+django == 1.4
+south
