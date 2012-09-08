@@ -1,5 +1,5 @@
 # Summoner Stats
 
-pip install -r requirements.txt
-
-Yeah, there's nothing here yet.
+`pip install -r requirements.txt`  
+`touch summonerstats/.private-settings`  
+`python manage.py syncdb`  
