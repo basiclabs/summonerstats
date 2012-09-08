@@ -7,4 +7,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^import/$', 'leaguetrack.views.import_replay'),
 )
