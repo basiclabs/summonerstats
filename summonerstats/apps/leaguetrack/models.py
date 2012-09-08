@@ -40,6 +40,7 @@ class Game(models.Model):
     ranked = models.BooleanField()
     winning_team = models.IntegerField()
     match_length = models.IntegerField() #in seconds
+    timestamp = models.DateTimeField()
 
     def __unicode__(self):
         return "%s: %ss (%s)" % (self.queue_type, self.match_length, self.region)
