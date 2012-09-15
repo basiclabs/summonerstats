@@ -43,7 +43,7 @@ class Game(models.Model):
     timestamp = models.DateTimeField()
 
     def __unicode__(self):
-        return "%s: %ss (%s)" % (self.queue_type, self.match_length, self.region)
+        return "%s; %s; %s; %ss" % (self.owner, self.queue_type, self.region.upper(), self.match_length)
 
 class SummonerSpell(models.Model):
     name = models.CharField(max_length=40)
@@ -99,4 +99,4 @@ class Game_Player(models.Model):
     leaves = models.IntegerField()
 
     def __unicode__(self):
-        return "%s (%s) - %s" % (self.player.name, self.champion.name, self.game.queue_type)
+        return "%s -- %s (%s)" % (self.game, self.player.name, self.champion.name)
