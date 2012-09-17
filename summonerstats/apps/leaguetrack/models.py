@@ -3,15 +3,22 @@ from django.db import models
 from django.conf import settings
 
 class Summoner(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, blank=True, null=True)
     name = models.CharField(max_length=40)
-    level = models.IntegerField()
-    wins = models.IntegerField()
-    losses = models.IntegerField()
-    leaves = models.IntegerField()
+    level = models.IntegerField(default=1)
+    wins = models.IntegerField(default=0)
+    losses = models.IntegerField(default=0)
+    leaves = models.IntegerField(default=0)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.level)
+
+    def total_games(self):
+        return self.wins + self.losses + self.leaves
+
+    def win_ratio(self):
+        return "%s%%" % int(float(self.wins) / float(self.total_games()) * 100)
+
 
 class Champion(models.Model):
     name = models.CharField(max_length=40)
@@ -44,6 +51,12 @@ class Game(models.Model):
 
     def __unicode__(self):
         return "%s; %s; %s; %ss" % (self.owner, self.queue_type, self.region.upper(), self.match_length)
+
+    def team1(self):
+        return Game_Player.objects.filter(game=self, team=1)
+
+    def team2(self):
+        return Game_Player.objects.filter(game=self, team=2)
 
 class SummonerSpell(models.Model):
     name = models.CharField(max_length=40)

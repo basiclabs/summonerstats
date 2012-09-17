@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ul>
+{% for summoner in owner.summoner_set.all %}
+    <li>{{summoner.name}} -- {{summoner.wins}}:{{summoner.losses}}, {{summoner.win_ratio}}</li>
+{% endfor %}
+</ul>
+{% endblock %}

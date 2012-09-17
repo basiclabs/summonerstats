@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>Uploaded by: {{game.owner}}</p>
+<p>Winner: Team {{game.winning_team}}</p>
+<p>Region: {{game.region|upper}}</p>
+<p>Played on: {{game.timestamp}}</p>
+<p>Match Length: {{game.match_length}} seconds</p>
+<p>Team 1:</p>
+<ul>
+    {% for game_player in game.team1 %}
+        <li>{{game_player.player.name}} ({{game_player.champion.name}})</li>
+    {% endfor %}
+</ul>
+<p>Team 2:</p>
+<ul>
+    {% for game_player in game.team2 %}
+        <li>{{game_player.player.name}} ({{game_player.champion.name}})</li>
+    {% endfor %}
+</ul>
+{% endblock %}

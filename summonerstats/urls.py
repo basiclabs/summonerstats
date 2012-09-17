@@ -11,5 +11,7 @@ urlpatterns = patterns('',
     url(r'^register/$', 'accounts.views.register'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'},name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page':'/'}, name='logout'),
+    url(r'^(?P<user_name>[-\w]+)/$', 'leaguetrack.views.profile'),
+    url(r'^game/(?P<game_id>[-\w]+)/$', 'leaguetrack.views.view_game'),
     url(r'^$', 'leaguetrack.views.home_page'),
 )
