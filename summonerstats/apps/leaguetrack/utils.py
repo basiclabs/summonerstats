@@ -23,7 +23,7 @@ def replay_from_url(owner, url):
     summoners_added = champions_added = gps_added = 0
 
     for lolplayer in replay.players:
-        summoner, summoner_created = Summoner.objects.get_or_create(name=lolplayer.summoner)
+        summoner, summoner_created = Summoner.objects.get_or_create(region=replay.region, name=lolplayer.summoner)
 
         summoner.level = lolplayer.summoner_level if lolplayer.summoner_level > summoner.level else summoner.level
         summoner.wins = lolplayer.wins if lolplayer.wins > summoner.wins else summoner.wins
@@ -68,6 +68,4 @@ def replay_from_url(owner, url):
         gps_added = gps_added + 1 if gp_created else gps_added
 
 
-        return "New Game? %s; Summoners Added: %s; Champions Added: %s; Game_Players Added: %s" % (game_created, summoners_added, champions_added, gps_added)
-    else:
-        return "Need a replay"
+    return "New Game? %s; Summoners Added: %s; Champions Added: %s; Game_Players Added: %s" % (game_created, summoners_added, champions_added, gps_added)

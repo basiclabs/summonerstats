@@ -2,4 +2,4 @@
 
 django == 1.4
 south
-git+git://github.com/khinds/lolreader.git@2ee8cae1a03ef3ec8e65db69882c6e64206b4a42#egg=lolreader
+-e git+git://github.com/khinds/lolreader.git@2ee8cae1a03ef3ec8e65db69882c6e64206b4a42#egg=lolreader

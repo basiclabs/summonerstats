@@ -7,7 +7,7 @@
     <nav class='top-nav'>
         <ul>
         {% if user.is_authenticated %}
-            <li><a href='/{{user.username}}'>{{user.username}}</a></li>
+            <li>{{user.username}}</li>
             <li><a href='/logout'>Logout</a></li>
         {% else %}
             <li><a href='/register'>Register</a></li>
