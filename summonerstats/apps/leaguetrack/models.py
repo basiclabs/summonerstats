@@ -3,12 +3,13 @@ from django.db import models
 from django.conf import settings
 
 class Summoner(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True)
+    followers = models.ManyToManyField(User, blank=True, null=True)
     name = models.CharField(max_length=40)
     level = models.IntegerField(default=1)
     wins = models.IntegerField(default=0)
     losses = models.IntegerField(default=0)
     leaves = models.IntegerField(default=0)
+    region = models.CharField(max_length=20)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.level)
@@ -18,6 +19,9 @@ class Summoner(models.Model):
 
     def win_ratio(self):
         return "%s%%" % int(float(self.wins) / float(self.total_games()) * 100)
+
+    def href(self):
+        return "/summoner/%s/%s/" % (self.region, self.name)
 
 
 class Champion(models.Model):

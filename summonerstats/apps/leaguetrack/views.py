@@ -8,11 +8,18 @@ import lolreader
 from datetime import datetime
 
 def home_page(request):
-    return render(request, 'base.html')
+    if request.user.is_authenticated():
+        return render(request, 'dashboard.html', {'owner': request.user})
+    else:
+        return render(request, 'base.html')
 
-def profile(request, user_name):
-    owner = User.objects.get(username=user_name)
-    return render(request, 'profile.html', {'owner': owner})
+def view_metrics(request, region, summoner_name):
+    summoner = Summoner.objects.get(region=region, name=summoner_name)
+    return render(request, 'metrics.html', {'summoner': summoner})
+
+def view_summoner(request, region, summoner_name):
+    summoner = Summoner.objects.get(region=region, name=summoner_name)
+    return render(request, 'summoner.html', {'summoner': summoner})
 
 def view_game(request, game_id):
     game = Game.objects.get(pk=game_id)

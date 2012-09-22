@@ -2,9 +2,10 @@
 
 {% block content %}
 
+<p>Following:</p>
 <ul>
 {% for summoner in owner.summoner_set.all %}
-    <li>{{summoner.name}} -- {{summoner.wins}}:{{summoner.losses}}, {{summoner.win_ratio}}</li>
+    <li><a href='{{summoner.href}}'>{{summoner.name}}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}
