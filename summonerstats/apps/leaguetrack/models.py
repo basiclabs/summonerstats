@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
+from datetime import datetime
 
 class Summoner(models.Model):
     followers = models.ManyToManyField(User, blank=True, null=True)
@@ -42,7 +43,7 @@ class Champion(models.Model):
         return "%s, %s" % (self.name, self.title)
 
 class Game(models.Model):
-    owner = models.ForeignKey(User)
+    uploader = models.ForeignKey(User)
     players = models.ManyToManyField(Summoner, through='Game_Player')
     match_type = models.IntegerField()
     game_mode = models.IntegerField()
@@ -52,9 +53,10 @@ class Game(models.Model):
     winning_team = models.IntegerField()
     match_length = models.IntegerField() #in seconds
     timestamp = models.DateTimeField()
+    upload_timestamp = models.DateTimeField(default=datetime.now())
 
     def __unicode__(self):
-        return "%s; %s; %s; %ss" % (self.owner, self.queue_type, self.region.upper(), self.match_length)
+        return "%s; %s; %s; %ss" % (self.uploader, self.queue_type, self.region.upper(), self.match_length)
 
     def team1(self):
         return Game_Player.objects.filter(game=self, team=1)

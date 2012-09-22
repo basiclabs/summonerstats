@@ -9,7 +9,7 @@ def replay_from_url(owner, url):
     winner = 1 if replay.teams[0].won else 2
 
     game_replay, game_created  = Game.objects.get_or_create(
-        owner=owner,
+        uploader=owner,
         match_type=replay.match_type,
         game_mode=replay.game_mode,
         queue_type=replay.queue_type,
