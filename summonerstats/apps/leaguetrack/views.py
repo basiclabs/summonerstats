@@ -16,7 +16,7 @@ def home_page(request):
             q |= Q(players__name = summoner.name)
         game_list = Game.objects.filter(q).distinct().order_by('-upload_timestamp')
 
-	feedlist = []
+        feedlist = []
         for game in game_list:
             feed_item = {'game': game, 'favorites': game.get_favorites(user.summoner_set.all()) }
             feedlist.append(feed_item)

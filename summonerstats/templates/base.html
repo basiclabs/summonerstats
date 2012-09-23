@@ -2,21 +2,27 @@
 <html>
 <head>
     <title>Summoner Stats</title>
+    <link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/base.css' />
 </head>
 <body>
-    <nav class='top-nav'>
-        <ul>
-        {% if user.is_authenticated %}
-            <li>{{user.username}}</li>
-            <li><a href='/logout'>Logout</a></li>
-        {% else %}
-            <li><a href='/register'>Register</a></li>
+    <header class='content-block top-head'>
+        <div class='logo'><a href='/'>Summoner Stats</a></div>
+        <nav class='user-functions'>
+            <ul>
+            {% if user.is_authenticated %}
+                <li>{{user.username}}</li>
+                <li><a href='/logout'>Logout</a></li>
+            {% else %}
+                <li><a href='/register'>Register</a></li>
             <li><a href='/login'>Login</a></li>
-        {% endif %}
-        </ul>
-    </nav>
-    {% block content %}
-        {{rendertext}}
-    {% endblock %}
+            {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <div class='content-block' id='content'>
+        {% block content %}
+            {{rendertext}}
+        {% endblock %}
+    </div>
 </body>
 <html>

@@ -1,0 +1,45 @@
+body {
+  background: #e9e9e9;
+  margin: 0;
+  font-size: 15px;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+ul, p {
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #08c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline
+}
+
+.content-block {
+  background: #fff;
+  width: 1050px;
+  padding: 25px;
+  border: 1px #ccc solid;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.top-head {
+  overflow: auto;
+  line-height: 20px;
+}
+.top-head .logo {
+  float: left;
+  font-size: 1.5em;
+}
+.top-head .user-functions{
+  float: right;
+}
+.top-head nav.user-functions li {
+  float: left;
+  list-style-type: none;
+  padding: 0 15px;
+}
+#content {
+}
