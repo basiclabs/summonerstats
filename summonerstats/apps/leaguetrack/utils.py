@@ -1,5 +1,6 @@
 import lolreader
 from django.http import HttpRequest
+from django.template.defaultfilters import slugify
 from leaguetrack.models import *
 from datetime import datetime
 
@@ -29,7 +30,7 @@ def replay_from_url(owner, url):
     summoners_added = champions_added = gps_added = 0
 
     for lolplayer in replay.players:
-        summoner, summoner_created = Summoner.objects.get_or_create(region=replay.region, name=lolplayer.summoner)
+        summoner, summoner_created = Summoner.objects.get_or_create(region=replay.region, name=lolplayer.summoner, slug_name=slugify(lolplayer.summoner))
 
         summoner.level = lolplayer.summoner_level if lolplayer.summoner_level > summoner.level else summoner.level
         summoner.wins = lolplayer.wins if lolplayer.wins > summoner.wins else summoner.wins

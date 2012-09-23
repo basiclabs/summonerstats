@@ -29,11 +29,11 @@ def home_page(request):
         return render(request, 'base.html')
 
 def view_metrics(request, region, summoner_name):
-    summoner = Summoner.objects.get(region__iexact=region, name__iexact=summoner_name)
+    summoner = Summoner.objects.get(region__iexact=region, slug_name__iexact=summoner_name)
     return render(request, 'metrics.html', {'summoner': summoner})
 
 def view_summoner(request, region, summoner_name):
-    summoner = Summoner.objects.get(region__iexact=region, name__iexact=summoner_name)
+    summoner = Summoner.objects.get(region__iexact=region, slug_name__iexact=summoner_name)
     summoner.followed = summoner.followers.filter(username=request.user.username).count() > 0
     
     feed = [
@@ -49,7 +49,7 @@ def view_summoner(request, region, summoner_name):
 
 @login_required
 def follow_toggle_summoner(request, region, summoner_name):
-    summoner = Summoner.objects.get(region__iexact=region, name__iexact=summoner_name)
+    summoner = Summoner.objects.get(region__iexact=region, slug_name__iexact=summoner_name)
     following = summoner.followers.filter(username=request.user.username).count() > 0
     if following:
         summoner.followers.remove(request.user)

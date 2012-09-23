@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Count
 from django.conf import settings
+from django.template.defaultfilters import slugify
 from datetime import datetime
 
 class Summoner(models.Model):
@@ -12,6 +13,7 @@ class Summoner(models.Model):
     losses = models.IntegerField(default=0)
     leaves = models.IntegerField(default=0)
     region = models.CharField(max_length=20)
+    slug_name = models.SlugField(unique=True)
 
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.level)
@@ -23,7 +25,7 @@ class Summoner(models.Model):
         return "%s%%" % int(float(self.wins) / float(self.total_games()) * 100)
 
     def href(self):
-        return "/summoner/%s/%s/" % (self.region, self.name)
+        return "/summoner/%s/%s/" % (self.region, slugify(self.name))
 
     def favorite_champion(self):
         return Champion.objects.filter(game_player__player=self)\
