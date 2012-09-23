@@ -1,7 +1,41 @@
 {% extends "base.html" %}
 
+{% block css %}
+    {{block.super}}
+    <link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/summoner.css' />
+{% endblock %}
+
 {% block content %}
 
-{{summoner}}
+<div class='summoner'>
+    <div class='summoner-info'>
+        <img
+            title='Most Played Champion: {{summoner.favorite_champion.name}}'
+            src='{{summoner.favorite_champion.portrait_url}}'
+        />
+        <hr />
+        <div class='summoner-stats'>
+            <ul>
+                <li>{{summoner.name}}</li>
+                <li>Region: {{summoner.region|upper}}</li>
+                <li>Level: {{summoner.level}}</li>
+                <li>Wins: {{summoner.wins}}</li>
+                <li>Losses: {{summoner.losses}}</li>
+                <li>Leaves: {{summoner.leaves}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class='summoner-feed'>
+        <ul>
+        {% for game in summoner.game_set.all %}
+            <li>
+                {{summoner.name}} 
+                played in <a href='{{game.href}}'>a game</a>
+                uploaded on {{game.upload_timestamp}}</li>
+            </li>
+        {% endfor %}
+        </ul>
+    <div>
+</div>
 
 {% endblock %}

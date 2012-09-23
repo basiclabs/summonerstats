@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Count
 from django.conf import settings
 from datetime import datetime
 
@@ -24,6 +25,10 @@ class Summoner(models.Model):
     def href(self):
         return "/summoner/%s/%s/" % (self.region, self.name)
 
+    def favorite_champion(self):
+        return Champion.objects.filter(game_player__player=self)\
+            .annotate(num_plays=Count('pk'))\
+            .order_by('-num_plays')[0]
 
 class Champion(models.Model):
     name = models.CharField(max_length=40)
@@ -54,6 +59,9 @@ class Game(models.Model):
     match_length = models.IntegerField() #in seconds
     timestamp = models.DateTimeField()
     upload_timestamp = models.DateTimeField(default=datetime.now())
+
+    class Meta:
+        ordering = ['-upload_timestamp']
 
     def __unicode__(self):
         return "%s; %s; %s; %ss" % (self.uploader, self.queue_type, self.region.upper(), self.match_length)
