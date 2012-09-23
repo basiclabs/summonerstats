@@ -31,7 +31,19 @@ def view_metrics(request, region, summoner_name):
 
 def view_summoner(request, region, summoner_name):
     summoner = Summoner.objects.get(region__iexact=region, name__iexact=summoner_name)
+    summoner.followed = summoner.followers.filter(username=request.user.username).count() > 0
     return render(request, 'summoner.html', {'summoner': summoner})
+
+@login_required
+def follow_toggle_summoner(request, region, summoner_name):
+    summoner = Summoner.objects.get(region__iexact=region, name__iexact=summoner_name)
+    following = summoner.followers.filter(username=request.user.username).count() > 0
+    if following:
+        summoner.followers.remove(request.user)
+    else:
+        summoner.followers.add(request.user)
+    summoner.save()
+    return HttpResponse("success")
 
 def view_game(request, game_id):
     game = Game.objects.get(pk=game_id)

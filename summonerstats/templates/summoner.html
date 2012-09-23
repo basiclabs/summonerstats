@@ -5,14 +5,36 @@
     <link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/summoner.css' />
 {% endblock %}
 
-{% block content %}
+{% block js %}
+    {{block.super}}
+    <script>
+    $(document).ready(function(){
+        $('a.follow_toggle').click(function(){
+            $.ajax({
+                url: 'follow_toggle/'
+            }).done(function(data){
+                if(data == 'success') {
+                    $('a.follow_toggle').toggleClass('followed');
+                }
+            });
+        });
+    });
+    </script>
+{% endblock %}
 
+{% block content %}
 <div class='summoner'>
     <div class='summoner-info'>
         <img
             title='Most Played Champion: {{summoner.favorite_champion.name}}'
             src='{{summoner.favorite_champion.portrait_url}}'
         />
+        {% if user.is_authenticated %}
+        <br />
+        <a class='follow_toggle{%if summoner.followed %} followed{%endif%}' href='javascript:void(0);'>
+            Follow
+        </a>
+        {% endif %}
         <hr />
         <div class='summoner-stats'>
             <ul>

@@ -22,3 +22,9 @@
 .summoner-feed ul {
   list-style-type: none;
 }
+a.follow_toggle:after {
+  content: ' [ ]';
+}
+a.follow_toggle.followed:after {
+  content:' [x]';
+}
