@@ -15,7 +15,6 @@ a {
 a:hover {
   text-decoration: underline
 }
-
 .content-block {
   background: #fff;
   width: 1050px;
@@ -24,7 +23,6 @@ a:hover {
   margin: 0 auto;
   margin-top: 10px;
 }
-
 .top-head {
   overflow: auto;
   line-height: 20px;
@@ -40,6 +38,4 @@ a:hover {
   float: left;
   list-style-type: none;
   padding: 0 15px;
-}
-#content {
 }
