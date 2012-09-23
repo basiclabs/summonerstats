@@ -2,6 +2,7 @@
 from django.http import HttpResponse, HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.db.models import Q
 from leaguetrack.models import *
 from leaguetrack.utils import replay_from_url
 import lolreader
@@ -9,7 +10,18 @@ from datetime import datetime
 
 def home_page(request):
     if request.user.is_authenticated():
-        return render(request, 'dashboard.html', {'owner': request.user})
+        user = request.user
+        q = Q()
+        for summoner in user.summoner_set.all():
+            q |= Q(players__name = summoner.name)
+        game_list = Game.objects.filter(q).distinct().order_by('-upload_timestamp')
+
+	feedlist = []
+        for game in game_list:
+            feed_item = {'game': game, 'favorites': game.get_favorites(user.summoner_set.all()) }
+            feedlist.append(feed_item)
+
+        return render(request, 'dashboard.html', {'owner': request.user, 'feedlist': feedlist})
     else:
         return render(request, 'base.html')
 

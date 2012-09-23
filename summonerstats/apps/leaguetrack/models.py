@@ -58,11 +58,23 @@ class Game(models.Model):
     def __unicode__(self):
         return "%s; %s; %s; %ss" % (self.uploader, self.queue_type, self.region.upper(), self.match_length)
 
+    def href(self):
+        return '/game/%s' % self.pk
+
     def team1(self):
         return Game_Player.objects.filter(game=self, team=1)
 
     def team2(self):
         return Game_Player.objects.filter(game=self, team=2)
+
+    def get_favorites(self, fave_list):
+        def list_contains(l, item):
+            for l_item in l:
+	        if l_item.name == item.name:
+                    return True
+            return False
+    
+        return [player for player in self.players.all().order_by('pk') if list_contains(fave_list, player)]
 
 class SummonerSpell(models.Model):
     name = models.CharField(max_length=40)

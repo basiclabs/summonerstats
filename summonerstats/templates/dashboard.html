@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<p>Feed:</p>
+<ul>
+{% for feed_item in feedlist %}
+    <li>
+    {% for favorite in feed_item.favorites %}
+        {{favorite.name}}, 
+    {% endfor %}
+    played <a href='{{feed_item.game.href}}'>a game</a> that was uploaded on {{feed_item.game.upload_timestamp}}
+{% endfor %}
+</ul>
 <p>Following:</p>
 <ul>
 {% for summoner in owner.summoner_set.all %}
