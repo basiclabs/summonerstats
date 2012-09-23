@@ -5,10 +5,10 @@
 <ul>
 {% for feed_item in feedlist %}
     <li>
-    {% for favorite in feed_item.favorites %}
-        {{favorite.name}}, 
-    {% endfor %}
-    played <a href='{{feed_item.game.href}}'>a game</a> that was uploaded on {{feed_item.game.upload_timestamp}}
+        {{feed_item.favorites|safe}} 
+    played in <a href='{{feed_item.game.href}}'>a game</a>
+    uploaded by {{feed_item.game.uploader}}
+    on {{feed_item.game.upload_timestamp}}
 {% endfor %}
 </ul>
 <p>Following:</p>

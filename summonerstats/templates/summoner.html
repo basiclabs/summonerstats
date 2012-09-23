@@ -31,7 +31,9 @@
         />
         {% if user.is_authenticated %}
         <br />
-        <a class='follow_toggle{%if summoner.followed %} followed{%endif%}' href='javascript:void(0);'>
+        <a
+            class='follow_toggle{% if summoner.followed %} followed{% endif %}'
+            href='javascript:void(0);'>
             Follow
         </a>
         {% endif %}
@@ -49,11 +51,13 @@
     </div>
     <div class='summoner-feed'>
         <ul>
-        {% for game in summoner.game_set.all %}
+        {% for item in feed %}
             <li>
-                {{summoner.name}} 
-                played in <a href='{{game.href}}'>a game</a>
-                uploaded on {{game.upload_timestamp}}</li>
+                <a href='{{summoner.href}}'>{{summoner.name}}</a>
+                played as {{item.game_player.champion.name}}
+                <a href='{{item.game.href}}'>in a game</a>
+                uploaded by {{item.game.uploader}}
+                on {{item.game.upload_timestamp}}
             </li>
         {% endfor %}
         </ul>

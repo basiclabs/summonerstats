@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Q
 from leaguetrack.models import *
-from leaguetrack.utils import replay_from_url
+from leaguetrack.utils import english_list_join, replay_from_url
 import lolreader
 from datetime import datetime
 
@@ -16,10 +16,13 @@ def home_page(request):
             q |= Q(players__name = summoner.name)
         game_list = Game.objects.filter(q).distinct().order_by('-upload_timestamp')
 
-        feedlist = []
-        for game in game_list:
-            feed_item = {'game': game, 'favorites': game.get_favorites(user.summoner_set.all()) }
-            feedlist.append(feed_item)
+        feedlist = [{
+            'game': game,
+            'favorites': english_list_join([
+                "<a href='%s'>%s</a>" % (summoner.href(), summoner.name)
+                for summoner in game.get_favorites(user.summoner_set.all())
+            ])
+        } for game in game_list]
 
         return render(request, 'dashboard.html', {'owner': request.user, 'feedlist': feedlist})
     else:
@@ -32,7 +35,17 @@ def view_metrics(request, region, summoner_name):
 def view_summoner(request, region, summoner_name):
     summoner = Summoner.objects.get(region__iexact=region, name__iexact=summoner_name)
     summoner.followed = summoner.followers.filter(username=request.user.username).count() > 0
-    return render(request, 'summoner.html', {'summoner': summoner})
+    
+    feed = [
+        {
+            'game': game,
+            'game_player': Game_Player.objects.get(game=game, player=summoner)
+        }
+        for game in summoner.game_set.all()
+    ]
+    
+
+    return render(request, 'summoner.html', {'summoner': summoner, 'feed': feed})
 
 @login_required
 def follow_toggle_summoner(request, region, summoner_name):
