@@ -4,11 +4,8 @@ from django.template.defaultfilters import slugify
 from leaguetrack.models import *
 from datetime import datetime
 
-def english_list_join(x):
-    if len(x) <= 2:
-        return ' and '.join(x)
-    else:
-        return ', '.join(x[:-1]) + ' and ' + x[-1]
+def eng_join(x):
+    return ' and'.join(', '.join(x).rsplit(',', 1))
 
 def replay_from_url(owner, url):
     replay = lolreader.read_replay_from_url(url)
