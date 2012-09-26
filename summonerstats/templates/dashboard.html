@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load leaguetrack_extras %}
 
 {% block content %}
 <p>Feed:</p>
 <ul>
-{% for feed_item in feedlist %}
+{% for feed_item in feed %}
     <li>
-        {{feed_item.favorites|safe}} 
+        {{feed_item.favorites|en_href_list|safe}} 
     played in <a href='{{feed_item.game.href}}'>a game</a>
     uploaded by {{feed_item.game.uploader}}
     on {{feed_item.game.upload_timestamp}}

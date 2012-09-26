@@ -16,15 +16,12 @@ def home_page(request):
             q |= Q(players__name = summoner.name)
         game_list = Game.objects.filter(q).distinct().order_by('-upload_timestamp')
 
-        feedlist = [{
+        feed = [{
             'game': game,
-            'favorites': eng_join([
-                "<a href='%s'>%s</a>" % (summoner.href(), summoner.name)
-                for summoner in game.get_favorites(user.summoner_set.all())
-            ])
+            'favorites': game.get_favorites(user.summoner_set.all())
         } for game in game_list]
 
-        return render(request, 'dashboard.html', {'owner': request.user, 'feedlist': feedlist})
+        return render(request, 'dashboard.html', {'owner': request.user, 'feed': feed})
     else:
         return render(request, 'base.html')
 
@@ -36,15 +33,11 @@ def view_summoner(request, region, summoner_name):
     summoner = Summoner.objects.get(region__iexact=region, slug_name__iexact=summoner_name)
     summoner.followed = summoner.followers.filter(username=request.user.username).count() > 0
     
-    feed = [
-        {
-            'game': game,
-            'game_player': Game_Player.objects.get(game=game, player=summoner)
-        }
-        for game in summoner.game_set.all()
-    ]
+    feed = [{
+        'game': game,
+        'game_player': Game_Player.objects.get(game=game, player=summoner)
+    } for game in summoner.game_set.all()]
     
-
     return render(request, 'summoner.html', {'summoner': summoner, 'feed': feed})
 
 @login_required
