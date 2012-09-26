@@ -1,0 +1,21 @@
+.team {
+  float: left; 
+  margin: 10px;
+}
+
+.team li {
+  display: inline;
+}
+.vs {
+  float: left;
+  text-align: center;
+  line-height: 80px;
+  width: 170px;
+  margin: 10px 0;
+}
+.main-block {
+  border: 1px #d0d0d0 solid;
+  padding: 25px;
+  clear: both;
+  margin: 10px;
+}

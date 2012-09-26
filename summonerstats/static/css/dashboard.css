@@ -1,0 +1,19 @@
+.min-block {
+  border: 1px #d0d0d0 solid;
+  float: left;
+  padding: 25px;
+  margin: 10px;
+}
+.following {
+  width: 175px;
+  padding-top: 15px;
+}
+.feed {
+  width: 731px;
+}
+.following ul {
+  margin-top: 15px;
+}
+.feed ul {
+  list-style-type: none;
+}

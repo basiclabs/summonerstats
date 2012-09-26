@@ -1,21 +1,29 @@
 {% extends "base.html" %}
 {% load leaguetrack_extras %}
 
+{% block css %}
+    {{block.super}}
+    <link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/dashboard.css' />
+{% endblock css %}
+
 {% block content %}
-<p>Feed:</p>
-<ul>
-{% for feed_item in feed %}
-    <li>
-        {{feed_item.favorites|en_href_list|safe}} 
-    played in <a href='{{feed_item.game.href}}'>a game</a>
-    uploaded by {{feed_item.game.uploader}}
-    on {{feed_item.game.upload_timestamp}}
-{% endfor %}
-</ul>
-<p>Following:</p>
-<ul>
-{% for summoner in owner.summoner_set.all %}
-    <li><a href='{{summoner.href}}'>{{summoner.name}}</a></li>
-{% endfor %}
-</ul>
+<div class='min-block feed'>
+    <ul class=''>
+    {% for feed_item in feed %}
+        <li>
+            {{feed_item.favorites|en_href_list|safe}} 
+        played in <a href='{{feed_item.game.href}}'>a game</a>
+        uploaded by {{feed_item.game.uploader}}
+        on {{feed_item.game.upload_timestamp}}
+    {% endfor %}
+    </ul>
+</div>
+<div class='min-block following'>
+    <p>Following:</p>
+    <ul class='indent'>
+    {% for summoner in owner.summoner_set.all %}
+        <li><a href='{{summoner.href}}'>{{summoner.name}}</a></li>
+    {% endfor %}
+    </ul>
+</div>
 {% endblock %}

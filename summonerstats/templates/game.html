@@ -1,22 +1,36 @@
 {% extends "base.html" %}
 
+{% block css %}
+    {{block.super}}
+    <link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/game.css' />
+{% endblock %}
+
 {% block content %}
 
-<p>Uploaded by: {{game.uploader}}</p>
-<p>Winner: Team {{game.winning_team}}</p>
-<p>Region: {{game.region|upper}}</p>
-<p>Played on: {{game.timestamp}}</p>
-<p>Match Length: {{game.match_length}} seconds</p>
-<p>Team 1:</p>
-<ul>
-    {% for game_player in game.team1 %}
-        <li><a href="{{game_player.player.href}}">{{game_player.player.name}}</a> ({{game_player.champion.name}})</li>
+<ul class='team team1'>
+    {% for gp in game.team1 %}
+        <li>
+            <a title='{{gp.player.name}} ({{gp.champion.name}})' href="{{gp.player.href}}">
+                <img width='80' src='{{gp.champion.portrait_url}}' />
+            </a>
+        </li>
     {% endfor %}
 </ul>
-<p>Team 2:</p>
-<ul>
-    {% for game_player in game.team2 %}
-        <li><a href="{{game_player.player.href}}">{{game_player.player.name}}</a> ({{game_player.champion.name}})</li>
+<div class='vs'>vs</div>
+<ul class='team team2'>
+    {% for gp in game.team2 %}
+        <li>
+            <a title='{{gp.player.name}} ({{gp.champion.name}})' href="{{gp.player.href}}">
+                <img width='80' src='{{gp.champion.portrait_url}}' />
+            </a>
+        </li>
     {% endfor %}
 </ul>
+<div class='main-block'>
+    <p>Uploaded by: {{game.uploader}}</p>
+    <p>Winner: Team {{game.winning_team}}</p>
+    <p>Region: {{game.region|upper}}</p>
+    <p>Played on: {{game.timestamp}}</p>
+    <p>Match Length: {{game.match_length}} seconds</p>
+</div>
 {% endblock %}
