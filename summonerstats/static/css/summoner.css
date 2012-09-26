@@ -28,3 +28,7 @@ a.follow_toggle:after {
 a.follow_toggle.followed:after {
   content:' [x]';
 }
+.summoner-name {
+  margin:0;
+  margin-bottom: 25px;
+}

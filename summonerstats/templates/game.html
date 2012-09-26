@@ -5,12 +5,30 @@
     <link rel='stylesheet' type='text/css' href='{{STATIC_URL}}css/game.css' />
 {% endblock %}
 
+{% block js %}
+    {{block.super}}
+    <script>
+        $(document).ready(function(){
+        $('.game-player').hide();
+        $('.game-player-link').click(function(){
+            var gp = $(this).attr('game-player');
+            $('.game-player').hide();
+            $('.game-player.'+gp).show();
+        });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
 
 <ul class='team team1'>
     {% for gp in game.team1 %}
         <li>
-            <a title='{{gp.player.name}} ({{gp.champion.name}})' href="{{gp.player.href}}">
+            <a
+                class='game-player-link'
+                title='{{gp.player.name}} ({{gp.champion.name}})'
+                game-player='{{gp.player.slug_name}}'
+                href="javascript:void(0)">
                 <img width='80' src='{{gp.champion.portrait_url}}' />
             </a>
         </li>
@@ -20,13 +38,22 @@
 <ul class='team team2'>
     {% for gp in game.team2 %}
         <li>
-            <a title='{{gp.player.name}} ({{gp.champion.name}})' href="{{gp.player.href}}">
+            <a
+                class='game-player-link'
+                title='{{gp.player.name}} ({{gp.champion.name}})'
+                game-player='{{gp.player.slug_name}}'
+                href="javascript:void(0)">
                 <img width='80' src='{{gp.champion.portrait_url}}' />
             </a>
         </li>
     {% endfor %}
 </ul>
 <div class='main-block'>
+    {% for gp in game.game_players %}
+        <div class='game-player {{gp.player.slug_name}}'>
+            <p><a href='{{gp.player.href}}'>{{gp.player.name}}</a></p>
+        </div>
+    {% endfor %}
     <p>Uploaded by: {{game.uploader}}</p>
     <p>Winner: Team {{game.winning_team}}</p>
     <p>Region: {{game.region|upper}}</p>

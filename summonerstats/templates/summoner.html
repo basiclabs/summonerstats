@@ -24,8 +24,10 @@
 
 {% block content %}
 <div class='summoner'>
+    <h1 class='summoner-name'>{{summoner.name}} ({{summoner.level}})</h1>
     <div class='summoner-info'>
         <img
+            width='120'
             title='Most Played Champion: {{summoner.favorite_champion.name}}'
             src='{{summoner.favorite_champion.portrait_url}}'
         />

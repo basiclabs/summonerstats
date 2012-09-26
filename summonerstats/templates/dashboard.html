@@ -12,9 +12,10 @@
     {% for feed_item in feed %}
         <li>
             {{feed_item.favorites|en_href_list|safe}} 
-        played in <a href='{{feed_item.game.href}}'>a game</a>
-        uploaded by {{feed_item.game.uploader}}
-        on {{feed_item.game.upload_timestamp}}
+            played in <a href='{{feed_item.game.href}}'>a game</a>
+            uploaded by {{feed_item.game.uploader}}
+            on {{feed_item.game.upload_timestamp}}
+        </li>
     {% endfor %}
     </ul>
 </div>

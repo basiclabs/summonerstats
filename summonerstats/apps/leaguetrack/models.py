@@ -71,6 +71,9 @@ class Game(models.Model):
     def href(self):
         return '/game/%s' % self.pk
 
+    def game_players(self):
+        return Game_Player.objects.filter(game=self)
+
     def team1(self):
         return Game_Player.objects.filter(game=self, team=1)
 
