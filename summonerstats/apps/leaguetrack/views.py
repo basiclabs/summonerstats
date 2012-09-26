@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.db.models import Q
 from leaguetrack.models import *
-from leaguetrack.utils import eng_join, replay_from_url
+from leaguetrack.utils import replay_from_url
 import lolreader
 from datetime import datetime
 

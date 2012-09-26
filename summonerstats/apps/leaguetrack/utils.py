@@ -4,9 +4,6 @@ from django.template.defaultfilters import slugify
 from leaguetrack.models import *
 from datetime import datetime
 
-def eng_join(x):
-    return ' and'.join(', '.join(x).rsplit(',', 1))
-
 def replay_from_url(owner, url):
     replay = lolreader.read_replay_from_url(url)
 
